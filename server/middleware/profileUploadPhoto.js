@@ -1,5 +1,6 @@
 import multer from "multer";
 const upload = multer({ dest: "uploads/" });
+import sharp from "sharp"
 
 const multerStorage = multer.memoryStorage();
 
