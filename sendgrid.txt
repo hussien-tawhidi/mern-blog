@@ -1,0 +1,3 @@
+for sharp npm
+npm install sharp --ignore-scripts
+
