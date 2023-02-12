@@ -1,3 +1,9 @@
 for sharp npm
 npm install sharp --ignore-scripts
 
+for image upload in cloudindary
+name = Hussien Tawhidi
+api-key=CAB5AC20DC5439D09E37
+secret=MvaLOSZbc3055uZhVQlApsMQAW1GEjo2RG9yFbyn
+
+sharp package use for resize

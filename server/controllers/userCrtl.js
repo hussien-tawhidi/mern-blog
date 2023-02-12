@@ -1,10 +1,12 @@
 import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
+import dotenv from "dotenv";           
+import nodemailer from "nodemailer";
 import generateToken from "../config/generateToken.js";
 import validateMongodbId from "../utils/validMongodbId.js";
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
 import crypto from "crypto";
+import fs from "fs";
+import cloudinaryUploadImg from "../utils/cloudinary.js";
 
 dotenv.config();
 
@@ -328,6 +330,25 @@ export const passwordResetToken = asyncHandler(async (req, res) => {
 //profile photo upload
 // ---------------------------------------------------------------------
 export const profilePhotoUploadCtrl = asyncHandler(async (req, res) => {
-  console.log(req.file);
-  res.status(200).json("upload");
+  //Find the login user
+  const { _id } = req.user;
+
+  //1. Get the oath to img
+  const localPath = `public/images/profile/${req.file.filename}`;
+  //2.Upload to cloudinary
+  const imgUploaded = await cloudinaryUploadImg(localPath);
+
+  const foundUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      profilePhoto: imgUploaded?.url,
+    },
+    { new: true }
+  );
+
+  await foundUser.save();
+  //Remove uploaded profile from localStorage
+  fs.unlinkSync(localPath);
+  res.json(foundUser);
 });
+

@@ -19,7 +19,10 @@ import {
   updateUserProfileCtrl,
   userProfileCtrl,
 } from "../controllers/userCrtl.js";
-import { profilePhotoUpload } from "../middleware/profileUploadPhoto.js";
+import {
+  profilePhotoResize,
+  photoUpload,
+} from "../middleware/photoUpload.js";
 
 const router = express.Router();
 
@@ -32,11 +35,13 @@ router
     authMiddleware,
     authMiddleware,
     generateVerificationTokenCtrl
-  );
+);
+  
 router
   .get("/", authMiddleware, fetchUsersCtrl)
   .get("/:id", fetchUserDetailsCtrl)
   .get("/profile/:id", authMiddleware, userProfileCtrl);
+  
 router
   .put("/:id", authMiddleware, updateUserProfileCtrl)
   .put("/change/password", authMiddleware, updateUserPasswordCtrl)
@@ -49,7 +54,8 @@ router
   .put(
     "/profile/photo/upload",
     authMiddleware,
-    profilePhotoUpload.single("image"),
+    photoUpload.single("image"),
+    profilePhotoResize,
     profilePhotoUploadCtrl
   );
 
