@@ -1,0 +1,43 @@
+@import url("./importAll.scss");
+@import url("./variabls.scss");
+body {
+  --bs-body-line-height: 1.4;
+  //   --bs-body-bg: var(--bs-gray-100);
+  // background-color: #eee;
+  font-family: "Roboto", sans-serif;
+}
+*,
+*::after,
+*::before,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+  color: inherit;
+  box-sizing: border-box;
+}
+.custome-alert-danger {
+  color: rgb(230, 105, 105);
+  font-size: 14px;
+}
+button {
+  border: 0;
+  background: transparent;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50vh;
+}

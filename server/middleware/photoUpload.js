@@ -9,13 +9,12 @@ const multerFilter = (req, file, cb) => {
     // success
     cb(null, true);
   } else {
-    // failed
+    //rejected files
     cb(
       {
         message: "not supported formate",
       },
       false
-      
     );
   }
 };

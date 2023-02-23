@@ -1,0 +1,38 @@
+.create-post {
+  background-color: $silver1;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  .create-post-content {
+    background-color: $dark-sliver;
+    color: $light-sliver;
+    padding: 1rem;
+    border-radius: 10px;
+    .title {
+      font-size: 25px;
+      font-weight: 600;
+    }
+    .desc {
+      margin: 10px 0;
+    }
+    form {
+      .category-select {
+        color: $dark-sliver;
+        margin-bottom: 10px;
+      }
+      label {
+        position: relative;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 1rem;
+        textarea {
+          height: 25vh;
+        }
+      }
+    }
+  }
+}

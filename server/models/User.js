@@ -6,7 +6,11 @@ const UserSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: [true, "first name is required"] },
     lastName: { type: String, required: [true, "last name is required"] },
-    profilePhoto: String,
+    profilePhoto: {
+      type: String,
+      default:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1200px-User-avatar.svg.png",
+    },
 
     email: {
       type: String,

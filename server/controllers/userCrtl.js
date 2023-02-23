@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import generateToken from "../config/generateToken.js";
 import validateMongodbId from "../utils/validMongodbId.js";
-import crypto from "crypto";
 import fs from "fs";
 import cloudinaryUploadImg from "../utils/cloudinary.js";
 
@@ -14,7 +13,7 @@ dotenv.config();
 // ---------------------------------------------------------------------
 export const registerUserCtrl = asyncHandler(async (req, res) => {
   const useExist = await User.findOne({ email: req.body.email });
-  if (useExist) throw new Error("user already exist");
+  if (useExist) throw new Error("user already exist _ ");
 
   try {
     const user = await User.create({
@@ -24,10 +23,6 @@ export const registerUserCtrl = asyncHandler(async (req, res) => {
       password: req?.body?.password,
     });
     res.status(200).json(user);
-    // if (!user) {
-    // } else {
-    //   res.status(404).json("exist");
-    // }
   } catch (error) {
     res.status(404).json(error);
   }
@@ -49,7 +44,7 @@ export const loginUserCtrl = asyncHandler(async (req, res) => {
       token: generateToken(userFound?._id),
     });
   } else {
-    res.status(404).json("invalid  email or password");
+     throw new Error("invalid  email or password _ ");
   }
 });
 

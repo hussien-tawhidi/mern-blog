@@ -7,10 +7,9 @@ const postSechema = new mongoose.Schema(
       // required: [true, "post title is required"],
       trim: true,
     },
-    catergory: {
+    category: {
       type: String,
       // required: [true, "post category is required"],
-      default: "all",
     },
     isLiked: {
       type: Boolean,
@@ -48,7 +47,7 @@ const postSechema = new mongoose.Schema(
     image: {
       type: String,
       default:
-        "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg",
+        "https://cdn.pixabay.com/photo/2020/10/25/09/23/seagull-5683637_960_720.jpg",
     },
   },
   {

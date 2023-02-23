@@ -1,0 +1,46 @@
+.public-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 5%;
+  .right {
+    display: flex;
+    align-items: center;
+    .right-menu {
+      align-items: center;
+      display: flex;
+      margin-right: 1rem;
+      background-color: $light-blue;
+      padding:.5rem 1rem;
+      border-radius: 10px;
+    }
+    .avatar{
+      width: 50px;
+    background-color: transparent;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    }
+  }
+  ul {
+    display: flex;
+    align-items: center;
+    li {
+      margin-left: 1rem;
+      a{
+        font-weight: 500;
+        opacity: .8;
+        padding: 10px;
+        border-radius: 10px;
+        &.active{
+            background-color: $dark-sliver;
+            color: $light-sliver;
+        }
+      }
+    }
+    img {
+      height: 50px;
+    }
+  }
+}

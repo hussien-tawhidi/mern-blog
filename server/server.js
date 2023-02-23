@@ -7,7 +7,7 @@ import postRoutes from "./routes/postRoutes.js";
 import emailRoutes from "./routes/emailRoutes.js"
 import commentRoutes from "./routes/commentRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
-
+import categoryRoutes from "./routes/categoryRoutes.js"
 myDB();
 
 const app = express();
@@ -23,6 +23,7 @@ app.use("/api/comment/", commentRoutes);
 // email bettween users that they could sent that in to easch other
 // -----------------------------
 app.use("/api/email", emailRoutes);
+app.use("/api/category", categoryRoutes);
 
 // errorhandler must use after router
 app.use(notFound);

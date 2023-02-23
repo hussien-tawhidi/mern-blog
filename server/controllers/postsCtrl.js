@@ -10,9 +10,8 @@ import cloudinaryUploadImg from "../utils/cloudinary.js";
 //create posts
 // ------------------------------
 export const createPostCtrl = asyncHandler(async (req, res) => {
-  console.log(req.file);
   const { _id } = req.user;
-  //   validateMongodbId(req.body.user);
+  // validateMongodbId(req.body.user);
   //Check for bad words
   const filter = new Filter();
   const isProfane = filter.isProfane(req.body.title, req.body.description);
@@ -224,5 +223,3 @@ export const toggleAddDislikeToPostCtrl = asyncHandler(async (req, res) => {
 
   // res.json();
 });
-
-
