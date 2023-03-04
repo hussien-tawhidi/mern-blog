@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Loader from "../../../utils/Loader";
@@ -17,16 +17,14 @@ const formSchema = Yup.object({
 
 export default function SendEmail() {
   const { id } = useParams();
-  const param = useParams();
   const dispatch = useDispatch();
-  const navegate = useNavigate();
 
   useEffect(() => {
     dispatch(userProfileAction(id));
   }, [id, dispatch]);
 
   const userProfile = useSelector((state) => state?.users);
-  const { profile, loading, appErr, serverErr, userAuth, sendEmail } =
+  const { profile, loading } =
     userProfile;
 
   const formik = useFormik({

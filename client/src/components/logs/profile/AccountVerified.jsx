@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { userVerfiedAccountAction } from "../../../app/slices/users/usersActions";
 
 export default function AccountVerified() {

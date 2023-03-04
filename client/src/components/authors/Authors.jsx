@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import moment from "moment";
-import { Link } from "react-router-dom";
 import Loader from "../../utils/Loader";
+import AuthorsHeader from "./AuthorsHeader";
+import AuthorsProfile from "./AuthorsProfile";
+import AuthosStatus from "./AuthosStatus";
 import {
   blockUserAction,
   fetchAllUsersAction,
   unBlockUserAction,
 } from "../../app/slices/users/usersActions";
-import AuthorsHeader from "./AuthorsHeader";
-import AuthorsProfile from "./AuthorsProfile";
-import AuthosStatus from "./AuthosStatus";
+
 export default function Authors() {
   const dispatch = useDispatch();
 
