@@ -1,6 +1,15 @@
 @import "./variabls.scss";
 @import "../components/home/home.scss";
-@import "../components/logs/user.scss";
 @import "../components/navegation/publicNav/public.scss";
 @import "../components/category/category.scss";
-@import "../components/posts/create-post.scss";
+// --------------------------------------------
+@import "../components/logs/user.scss";
+@import "../components/logs/profile/styles/account-verified.scss";
+@import "../components/logs/profile/styles/profile.scss";
+// ----------------------------------------------
+@import "../components/posts/createPosts/create-post.scss";
+@import "../components/posts/posts/posts.scss";
+@import "../components/posts/styles/post-details.scss";
+@import "../components/posts/styles/update-post.scss";
+// ----------------------------------------------
+@import "../components/comments/comments.scss";

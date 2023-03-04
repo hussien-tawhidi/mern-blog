@@ -4,23 +4,59 @@
   justify-content: space-between;
   height: 70px;
   padding: 0 5%;
+  position: relative;
+
   .right {
     display: flex;
     align-items: center;
+    position: relative;
+
     .right-menu {
       align-items: center;
       display: flex;
       margin-right: 1rem;
       background-color: $light-blue;
-      padding:.5rem 1rem;
+      padding: 0.5rem 1rem;
       border-radius: 10px;
     }
-    .avatar{
-      width: 50px;
-    background-color: transparent;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
+    .user-profile {
+      position: relative;
+      .avatar {
+        width: 40px;
+        background-color: transparent;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .profile-menu {
+        position: absolute;
+        top: 110%;
+         right: 0;
+        text-align: right;
+        padding: 10px;
+        width: 20rem;
+        -webkit-box-shadow: 0px 2px 6px 3px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0px 2px 6px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 2px 6px 3px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        opacity: 0;
+        z-index: 5;
+        pointer-events: none;
+        p {
+          padding: 0.5rem;
+          text-transform: capitalize;
+          font-size: 16px;
+          cursor: pointer;
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
+        &.show {
+        
+          opacity: 1;
+          pointer-events: visible;
+        }
+      }
     }
   }
   ul {
@@ -28,17 +64,18 @@
     align-items: center;
     li {
       margin-left: 1rem;
-      a{
+      a {
         font-weight: 500;
-        opacity: .8;
+        opacity: 0.8;
         padding: 10px;
         border-radius: 10px;
-        &.active{
-            background-color: $dark-sliver;
-            color: $light-sliver;
+        &.active {
+          background-color: $dark-sliver;
+          color: $light-sliver;
         }
       }
     }
+
     img {
       height: 50px;
     }

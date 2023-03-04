@@ -1,0 +1,142 @@
+.profile {
+  .cover {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .profile-content {
+    padding-bottom: 2rem;
+    display: flex;
+    .profile-details {
+      margin-right: 4rem;
+      text-align: center;
+      .user-name {
+        .user-followers {
+          p {
+            color: $light-blue;
+            font-size: 12px;
+          }
+          .title {
+            font-weight: 500;
+          }
+          .user {
+            font-size: 14px;
+            text-transform: capitalize;
+          }
+        }
+      }
+      .profile-img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+    .user-info {
+      margin-right: 2rem;
+      .date-joined {
+        margin-bottom: 1rem;
+        .viewed {
+          margin-bottom: 1rem;
+         border-radius: 10px;
+          .profile-img {
+            width: 50px;
+            height: 50px;
+          }
+          .user-name {
+            p {
+              color: $light-blue;
+              font-size: 10px;
+            }
+            .title {
+              font-weight: 500;
+            }
+            .user {
+              font-size: 14px;
+              text-transform: capitalize;
+            }
+          }
+        }
+        p {
+          // background-color: rebeccapurple;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .buttons {
+    display: flex;
+    .single-buttons {
+      text-align: center;
+      button {
+        margin: 0 2rem;
+        .icon {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  .user-posts {
+    border-top: 1px solid rgba(0, 0, 0, 0.411);
+    padding: 1rem 0;
+    .post-title {
+      margin: 1rem 0;
+      font-size: 40px;
+      opacity: 0.8;
+    }
+    .reactions {
+      display: flex;
+      justify-content: space-between;
+      .reactions-icon {
+        span {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+}
+
+// ----------------------------------------------
+.upload-profile-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content {
+    width: 50%;
+    margin: 5rem auto;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    .custome-alert-danger {
+      color: red;
+    }
+    .dropzone {
+      background-color: rgba(0, 0, 0, 0.03);
+      padding: 10px;
+      opacity: 0.6;
+      font-size: 30px;
+      text-align: center;
+      cursor: pointer;
+      .title {
+        text-align: center;
+        margin: 1rem 0;
+      }
+    }
+    form {
+      .err {
+        color: rgb(236, 149, 149);
+      }
+      .formate {
+        font-size: 16px;
+        opacity: 0.8;
+        margin: 1rem 0;
+      }
+      label {
+        text-align: center;
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUserAction } from "../../app/slices/users/usersActions";
+import { registerUserAction } from "../../../app/slices/users/usersActions";
 
 //Form schema
 const formSchema = Yup.object({
@@ -16,8 +16,7 @@ const formSchema = Yup.object({
 //-------------------------------
 export default function Register() {
   const dispatch = useDispatch();
- const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   //formik
   const formik = useFormik({
@@ -35,10 +34,10 @@ export default function Register() {
 
   const { loading, appErr, serverErr, registered } = useSelector(
     (store) => store.users
-  ); 
+  );
 
   if (registered) {
-    navigate("/profile")
+    navigate("/profile");
   }
 
   return (

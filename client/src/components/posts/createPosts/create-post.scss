@@ -12,6 +12,8 @@
     color: $light-sliver;
     padding: 1rem;
     border-radius: 10px;
+     -webkit-box-shadow: 0px 5px 15px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 0px 1px 15px 2px rgba(0, 0, 0, 0.4);
     .title {
       font-size: 25px;
       font-weight: 600;
@@ -21,14 +23,28 @@
     }
     form {
       .category-select {
+        display: flex;
         color: $dark-sliver;
-        margin-bottom: 10px;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1rem 0;
+        
+        .category-title {
+          font-size: 20px;
+          margin-bottom: 0;
+          color: $light-sliver;
+          width: 40%;
+        }
       }
       label {
         position: relative;
         width: 100%;
         text-align: left;
         margin-bottom: 1rem;
+        .create-post-select-image {
+          -webkit-box-shadow: 0px 5px 15px 2px rgba(255, 255, 255, 0.3);
+          box-shadow: 0px 1px 15px 2px rgba(255, 255, 255, 0.3);
+        }
         textarea {
           height: 25vh;
         }

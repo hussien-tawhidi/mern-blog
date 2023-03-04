@@ -13,7 +13,7 @@ export const createCategoryCtrl = asyncHandler(async (req, res) => {
     });
     res.status(200).json(category);
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
     // res.status(404).json(error);
   }
 });

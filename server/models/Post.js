@@ -4,12 +4,13 @@ const postSechema = new mongoose.Schema(
   {
     title: {
       type: String,
-      // required: [true, "post title is required"],
+      required: [true, "post title is required"],
       trim: true,
     },
     category: {
       type: String,
-      // required: [true, "post category is required"],
+      required: [true, "post category is required"],
+      default: "all",
     },
     isLiked: {
       type: Boolean,
@@ -21,7 +22,7 @@ const postSechema = new mongoose.Schema(
     },
     numViews: {
       type: Number,
-      default: 0,
+      default: 18,
     },
     likes: [
       {
@@ -58,6 +59,18 @@ const postSechema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// populate comments
+// ---------------
+// COMMENTS is the name of the this populate we could access any where else by this name
+// COMMENT is the _id of the comment model or the name of the model 
+// 
+
+postSechema.virtual("comments", {
+  ref: "Comment",
+  foreignField: "post",
+  localField: "_id",
+});
 
 const Post = mongoose.model("Post", postSechema);
 export default Post;

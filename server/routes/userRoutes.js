@@ -43,13 +43,13 @@ router
   .get("/profile/:id", authMiddleware, userProfileCtrl);
   
 router
-  .put("/:id", authMiddleware, updateUserProfileCtrl)
+  .put("/", authMiddleware, updateUserProfileCtrl)
   .put("/change/password", authMiddleware, updateUserPasswordCtrl)
-  .put("/user/follow", authMiddleware, followingUserCtrl)
-  .put("/user/unfollow", authMiddleware, unFollowUserCtrl)
+  .put("/this/follow", authMiddleware, followingUserCtrl)
+  .put("/this/unfollow", authMiddleware, unFollowUserCtrl)
   .put("/block-user/:id", authMiddleware, blockUserCtrl)
   .put("/unblock-user/:id", authMiddleware, unBlockUserCtrl)
-  .put("/verified/account", authMiddleware, accountVerificationCtrl)
+  .put("/verified/account/", authMiddleware, accountVerificationCtrl)
   .put("/password/reset", passwordResetToken)
   .put(
     "/profile/photo/upload",

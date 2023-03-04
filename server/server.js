@@ -4,10 +4,10 @@ import colors from "colors";
 import myDB from "./config/myDB.js";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
-import emailRoutes from "./routes/emailRoutes.js"
+import emailRoutes from "./routes/emailRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
-import categoryRoutes from "./routes/categoryRoutes.js"
+import categoryRoutes from "./routes/categoryRoutes.js";
 myDB();
 
 const app = express();

@@ -30,25 +30,25 @@ const CategoryDropDown = (props) => {
     props.onBlur("category", true);
   };
   return (
-    <div style={{ margin: "1rem 0" }}>
+    <div>
       {loading ? (
         <h3 className='text-base text-green-600'>
           Product categories list are loading please wait...
         </h3>
       ) : (
-        <Select
-          onChange={handleChange}
-          onBlur={handleBlur}
-          id='category'
-          options={allCategories}
-          value={props?.value?.label}
-        />
+        <div className='category-select-options'>
+          <Select
+            onChange={handleChange}
+            onBlur={handleBlur}
+            id='category'
+            options={allCategories}
+            value={props?.value?.label}
+          />
+        </div>
       )}
       {/* Display */}
       {props?.error && (
-        <div className='custome-alert-danger mx-4'>
-          {props?.error}
-        </div>
+        <div className='custome-alert-danger mx-4'>{props?.error}</div>
       )}
     </div>
   );

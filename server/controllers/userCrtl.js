@@ -1,11 +1,12 @@
 import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
-import dotenv from "dotenv";           
+import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import generateToken from "../config/generateToken.js";
 import validateMongodbId from "../utils/validMongodbId.js";
 import fs from "fs";
 import cloudinaryUploadImg from "../utils/cloudinary.js";
+import crypto from "crypto";
 
 dotenv.config();
 
@@ -41,17 +42,18 @@ export const loginUserCtrl = asyncHandler(async (req, res) => {
       email: userFound?.email,
       profilePhoto: userFound?.profilePhoto,
       isAdmin: userFound?.isAdmin,
+      isBlocked: userFound?.isBlocked,
       token: generateToken(userFound?._id),
     });
   } else {
-     throw new Error("invalid  email or password _ ");
+    throw new Error("invalid  email or password _ ");
   }
 });
 
 // get user
 // ---------------------------------------------------------------------
 export const fetchUsersCtrl = asyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate("posts");
   res.status(200).json(users);
 });
 
@@ -82,9 +84,37 @@ export const fetchUserDetailsCtrl = asyncHandler(async (req, res) => {
 export const userProfileCtrl = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongodbId(id);
+
+  // for viewed users
+  // -------------------------------
+  const loginUserId = await req?.user?.id?.toString();
+  // -------------------------------
+
   try {
-    const myProfile = await User.findById(id);
-    res.status(200).json(myProfile);
+    const myProfile = await User.findById(id)
+      .populate("posts")
+      .populate("viewedBy");
+    // res.status(200).json(myProfile);
+
+    // for viewed users
+    // ----------------
+
+    const alreadyViewed = await myProfile?.viewedBy?.find((user) => {
+      return user?.id?.toString() === loginUserId;
+    });
+
+    // prevent add thierself to viewed
+    const selfUserId = (await myProfile?.id) === req?.user?.id;
+
+    if (alreadyViewed || selfUserId) {
+      res.status(200).json(myProfile);
+    } else {
+      const profile = await User.findByIdAndUpdate(myProfile?.id, {
+        $push: { viewedBy: loginUserId },
+      });
+      res.status(200).json(profile);
+    }
+    // ----------------
   } catch (error) {
     res.status(200).json(error);
   }
@@ -93,13 +123,15 @@ export const userProfileCtrl = asyncHandler(async (req, res) => {
 //update user profile
 // ---------------------------------------------------------------------
 export const updateUserProfileCtrl = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  validateMongodbId(id);
+  const { _id } = req?.user;
+  validateMongodbId(_id);
   const user = await User.findByIdAndUpdate(
-    id,
+    _id,
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
+      email: req.body.email,
+      bio: req.body.bio,
     },
     { new: true, runValidators: true }
   );
@@ -232,8 +264,9 @@ export const generateVerificationTokenCtrl = asyncHandler(async (req, res) => {
 
     await transporter.sendMail({
       from: "hussientawhidi710@gmail.com", // sender address
-      to: "hussientawhidi711@gmail.com", // list of receivers
-      subject: "Hello ", // Subject line
+      to: user?.email, // list of receivers
+      // to: "hussientawhidi711@gmail.com", // list of receivers
+      subject: "Account Verification", // Subject line
       text: "Hello World", // plain text body
       html: `<h1>${resetURL}</h1>`, // html body
     });
@@ -247,13 +280,14 @@ export const generateVerificationTokenCtrl = asyncHandler(async (req, res) => {
 //account verified and update
 export const accountVerificationCtrl = asyncHandler(async (req, res) => {
   const { token } = req.body;
-  // const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  //find this user by token
   const userFound = await User.findOne({
-    accountVerificationToken: token,
+    accountVerificationToken: hashedToken,
     accountVerificationTokenExpires: { $gt: new Date() },
   });
   if (!userFound) throw new Error("Token expired, try again later");
+  //update the proprt to true
   userFound.isAccountVerified = true;
   userFound.accountVerificationToken = undefined;
   userFound.accountVerificationTokenExpires = undefined;
@@ -265,7 +299,7 @@ export const accountVerificationCtrl = asyncHandler(async (req, res) => {
 //forget password
 // ---------------------------------------------------------------------
 export const forgetPasswordToken = asyncHandler(async (req, res) => {
-  const { email } = req.body;
+  const { email } = req?.body;
   const user = await User.findOne({ email });
 
   if (!user) throw new Error("email not registered");
@@ -288,12 +322,12 @@ export const forgetPasswordToken = asyncHandler(async (req, res) => {
     await transporter.sendMail({
       from: "hussientawhidi710@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Hello ", // Subject line
-      text: "Hello World", // plain text body
-      html: `<h1>${resetURL}</h1>`, // html body
+      subject: "Reset Password", // Subject line
+      text: "Reset Password", // plain text body
+      html: `<p>${resetURL}</p>`, // html body
     });
     res.json({
-      msg: `A verification message is successfully sent tp ${user?.email}. Reset now whitin 10 minutes, ${resetURL}`,
+      msg: `A verification message is successfully sent to ${user?.email}. Reset now whitin 10 minutes`,
     });
   } catch (error) {
     res.status(404).json(error);
@@ -303,11 +337,11 @@ export const forgetPasswordToken = asyncHandler(async (req, res) => {
 //Reset password
 // ---------------------------------------------------------------------
 export const passwordResetToken = asyncHandler(async (req, res) => {
-  const { token, password } = req.body;
-  // const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  const { token, password } = req?.body;
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
   const user = await User.findOne({
-    passwordResetToken: token,
+    passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
   if (!user) throw new Error("token expired try again");
@@ -346,4 +380,3 @@ export const profilePhotoUploadCtrl = asyncHandler(async (req, res) => {
   fs.unlinkSync(localPath);
   res.json(foundUser);
 });
-

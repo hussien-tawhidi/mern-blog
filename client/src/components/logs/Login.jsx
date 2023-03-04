@@ -28,7 +28,7 @@ export default function Login() {
   const { loading, appErr, serverErr, userAuth } = useSelector((store) => store?.users);
 
   if (userAuth) {
-    navigate("/profile");
+    navigate("/");
   }
 
   return (
@@ -100,7 +100,7 @@ export default function Login() {
           )}
         </form>
         <div className='more-content'>
-          <Link to='/'>forgot password</Link>
+          <Link to='/reset-password-token'>forgot password</Link>
           <p>
             or don't have account ? <Link to='/register'>Register</Link>
           </p>

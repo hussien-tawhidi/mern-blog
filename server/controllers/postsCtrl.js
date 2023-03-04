@@ -25,6 +25,10 @@ export const createPostCtrl = asyncHandler(async (req, res) => {
     );
   }
 
+  // for account-type and allow the number of post
+  if (req?.user?.accountType === "Pre" && req?.user?.postCount >= 2)
+    throw new Error("The PRE account can only tow in a day");
+
   //1. Get the oath to img
   const localPath = `public/images/posts/${req.file.filename}`;
   //2.Upload to cloudinary
@@ -35,9 +39,16 @@ export const createPostCtrl = asyncHandler(async (req, res) => {
       image: imgUploaded?.url,
       user: _id,
     });
-    res.json(post);
+
+    // update user postCount
+    await User.findByIdAndUpdate(
+      _id,
+      { $inc: { postCount: 1 } },
+      { new: true }
+    );
     //Remove uploaded img
     fs.unlinkSync(localPath);
+    res.json(post);
   } catch (error) {
     res.json(error);
   }
@@ -47,9 +58,22 @@ export const createPostCtrl = asyncHandler(async (req, res) => {
 //get all posts
 // ------------------------------
 export const fetchPostsCtrl = asyncHandler(async (req, res) => {
+  const hasCategory = req?.query?.category;
   try {
-    const posts = await Post.find({}).populate("user");
-    res.json(posts);
+    // filter
+    if (hasCategory) {
+      const posts = await Post.find({ category: hasCategory })
+        .populate("user")
+        .populate("comments")
+        .sort("-createdAt");
+      res.json(posts);
+    } else {
+      const posts = await Post.find({})
+        .populate("user")
+        .populate("comments")
+        .sort("-createdAt");
+      res.json(posts);
+    }
   } catch (error) {
     res.json(error);
   }
@@ -61,12 +85,12 @@ export const fetchPostsCtrl = asyncHandler(async (req, res) => {
 export const fetchPostCtrl = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongodbId(id);
-
   try {
     const post = await Post.findById(id)
       .populate("user")
       .populate("disLikes")
-      .populate("likes");
+      .populate("likes")
+      .populate("comments");
     // update number of views
     await Post.findByIdAndUpdate(
       id,
@@ -91,9 +115,10 @@ export const updatePost = asyncHandler(async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(
       id,
-      { ...req.body },
+      { ...req.body, user: req.user?._id },
       { new: true }
     );
+    console.log(post);
     res.status(404).json(post);
   } catch (error) {
     res.status(404).json(error);

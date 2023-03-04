@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
 import {
   fetchSingleCategory,
   updateCategory,

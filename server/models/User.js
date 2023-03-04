@@ -100,6 +100,23 @@ UserSchema.pre("save", async function (next) {
 });
 
 // ---------------------------------------------------------------------
+// account type 
+// ---------------------------------------------------------------------
+UserSchema.virtual("accountType").get(function () {
+  const totalFollowers = this.followers?.length;
+  return totalFollowers >= 1 ? "Pro" : "Pre";
+});
+
+// ---------------------------------------------------------------------
+// virtual method to populate created post
+// ---------------------------------------------------------------------
+UserSchema.virtual("posts", {
+  ref: "Post",
+  foreignField: "user",
+  localField: "_id",
+});
+
+// ---------------------------------------------------------------------
 // match password
 // ---------------------------------------------------------------------
 UserSchema.methods.isPasswordMatched = async function (enteredPassword) {
